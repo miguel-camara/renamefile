@@ -152,7 +152,7 @@ public class Main {
 
     for (int i = 0, j = idx; i < files.length; i++, j++) {
       File sourceFile = files[i];
-      int index = i + 1;
+      int index = j;
       String ext = getFileExtension(sourceFile);
       String newFileName = basePattern.replace("#", String.valueOf(index)) + ext;
       File destFile = new File(outputDir, newFileName);
