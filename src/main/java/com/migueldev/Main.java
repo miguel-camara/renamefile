@@ -150,11 +150,11 @@ public class Main {
     int successCount = 0;
     int failCount = 0;
 
-    for (int i = 0, j = idx; i < files.length; i++, j++) {
+    for (int i = 0; i < files.length; i++, idx++) {
       File sourceFile = files[i];
-      int index = j;
+      // int index = j;
       String ext = getFileExtension(sourceFile);
-      String newFileName = basePattern.replace("#", String.valueOf(index)) + ext;
+      String newFileName = basePattern.replace("#", String.valueOf(idx)) + ext;
       File destFile = new File(outputDir, newFileName);
 
       try {
