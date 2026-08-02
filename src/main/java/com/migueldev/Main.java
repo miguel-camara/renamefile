@@ -7,6 +7,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
   public static void main(String[] args) {
@@ -59,55 +61,53 @@ public class Main {
 
     // 3. Get naming pattern
     String pattern = "";
-    while (pattern.isEmpty()) {
-      System.out.print(
-          "Enter new name pattern (use '#' for file index, e.g., 'new_name_#', extensions are preserved automatically): ");
-      pattern = scanner.nextLine().trim();
-      if (pattern.isEmpty()) {
-        System.out.println("[Error] Name pattern cannot be empty.");
-      }
+    // while (pattern.isEmpty()) {
+    System.out.print(
+        "Enter new name pattern (use '#' or '#Number' for file index, e.g., 'new_name_#', extensions are preserved automatically): ");
+    pattern = scanner.nextLine().trim();
+    if (pattern.isEmpty()) {
+      // System.out.println("[Error] Name pattern cannot be empty.");
+      pattern = "#";
     }
+    // }
 
     // 4. Get index
-    int idx;
-    try {
+    int idx = 0;
+    // try {
 
-      System.out.print(
-          "Enter index start (Press Enter to use default: 0): ");
-      idx = scanner.nextInt();
-    } catch (Exception e) {
-      idx = 0;
-    }
+    // System.out.print(
+    // "Enter index start (Press Enter to use default: 0): ");
+    // idx = scanner.nextInt();
+    // } catch (Exception e) {
+    // idx = 0;
+    // }
 
     // Get base pattern and ensure it has the '#' placeholder
     String basePattern = getBasePattern(pattern);
     if (!basePattern.contains("#")) {
-      basePattern = basePattern + " #";
+      basePattern += (basePattern.length() == 1) ? "#" : " #";
       System.out.println("-> Notice: Pattern did not contain '#'. Automatically adjusted to: " + basePattern);
     }
 
-    /**
-     * Get index
-     * String texto = "Este es el número #40 que tienes y también el #123 que
-     * falta";
-     *
-     * // Patrón: busca un '#' seguido de uno o más dígitos
-     * Pattern pattern = Pattern.compile("#(\\d+)");
-     * Matcher matcher = pattern.matcher(texto);
-     *
-     * if (matcher.find()) {
-     * String numeroStr = matcher.group(1); // Captura solo los dígitos
-     * try {
-     * int numero = Integer.parseInt(numeroStr);
-     * System.out.println("Número encontrado después de #: " + numero);
-     * } catch (NumberFormatException e) {
-     * System.out.println("El número es demasiado grande para un int.");
-     * }
-     * } else {
-     * System.out.println("No se encontró ningún número precedido por '#'.");
-     * }
-     *
-     */
+    // Get index
+    // String texto = "Este es el número que tienes y también el que falta";
+
+    // Patrón: busca un '#' seguido de uno o más dígitos
+    Pattern pattern2 = Pattern.compile("#(\\d+)");
+    Matcher matcher = pattern2.matcher(basePattern);
+
+    if (matcher.find()) {
+      String numeroStr = matcher.group(1); // Captura solo los dígitos
+      try {
+        idx = Integer.parseInt(numeroStr);
+        basePattern = basePattern.replaceFirst("#(\\d+)", "#");
+      } catch (NumberFormatException e) {
+        System.out.println("El número es demasiado grande para un int.");
+        idx = 0;
+      }
+    } else {
+      System.out.println("No se encontró ningún número precedido por '#'.");
+    }
 
     // 4. Retrieve and sort files in ascending order alphabetically by filename
     File[] files = sourceDir.listFiles(File::isFile);
