@@ -71,15 +71,12 @@ public class Main {
 
     // 3. Get naming pattern
     String pattern = "";
-    // while (pattern.isEmpty()) {
     System.out.print(
         "Enter new name pattern (use '#' or '#Number' for file index, e.g., 'new_name_#', extensions are preserved automatically): ");
     pattern = scanner.nextLine().trim();
     if (pattern.isEmpty()) {
-      // System.out.println("[Error] Name pattern cannot be empty.");
       pattern = "#";
     }
-    // }
 
     // 4. Get index, default to 0
     int idx = 0;
