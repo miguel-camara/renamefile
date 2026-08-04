@@ -90,7 +90,7 @@ public class Main {
               basePattern);
     }
 
-    // Patrón: busca un '#' seguido de uno o más dígitos
+    // Expresion regular: busca un '#' seguido de uno o más dígitos
     Pattern pattern2 = Pattern.compile("#(\\d+)");
     Matcher matcher = pattern2.matcher(basePattern);
 
