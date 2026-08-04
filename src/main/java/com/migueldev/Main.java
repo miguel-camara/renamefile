@@ -86,7 +86,7 @@ public class Main {
     if (!basePattern.contains("#")) {
       basePattern += " #";
       System.out.println(
-          "-> Notice: Pattern did not contain ' #'. Automatically adjusted to: " +
+          "-> Notice: Pattern did not contain '#'. Automatically adjusted to: " +
               basePattern);
     }
 
